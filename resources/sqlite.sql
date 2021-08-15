@@ -33,11 +33,9 @@ CREATE TABLE IF NOT EXISTS simpleeco_xuids
 -- #        :xuid string
 -- #        :money float
 -- #        :extraData ?string
-INSERT INTO simpleeco_data (xuid, money, extraData)
-VALUES (:xuid, :money, :extraData)
-ON DUPLICATE KEY UPDATE xuid      = VALUES(xuid),
-                        money     = VALUES(money),
-                        extraData = VALUES(extraData);
+INSERT OR
+REPLACE INTO simpleeco_data (xuid, money, extraData)
+VALUES (:xuid, :money, :extraData);
 -- #    }
 -- #    {getmoney
 -- #        :xuid string
@@ -57,11 +55,9 @@ WHERE xuid = :xuid;
 -- #        :xuid string
 -- #        :name string
 -- #        :extraData ?string
-INSERT INTO simpleeco_xuids (xuid, name, extraData)
-VALUES (:xuid, :name, :extraData)
-ON DUPLICATE KEY UPDATE xuid      = VALUES(xuid),
-                        name      = VALUES(name),
-                        extraData = VALUES(extraData);
+INSERT OR
+REPLACE INTO simpleeco_xuids (xuid, name, extraData)
+VALUES (:xuid, : name, :extraData);
 -- #    }
 -- #    {getxuidbyname
 -- #        :name string
