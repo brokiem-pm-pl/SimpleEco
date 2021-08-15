@@ -17,8 +17,19 @@ CREATE TABLE IF NOT EXISTS simpleeco_data
     extraData TEXT
 );
 -- #        }
+-- #        {xuids
+CREATE TABLE IF NOT EXISTS simpleeco_xuids
+(
+    id        INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+    xuid      VARCHAR(32) NOT NULL,
+    name      VARCHAR(32) NOT NULL,
+    extraData TEXT
+);
+-- #        }
 -- #    }
--- #    {add
+
+
+-- #    {addmoney
 -- #        :xuid string
 -- #        :money float
 -- #        :extraData string
@@ -28,10 +39,34 @@ ON DUPLICATE KEY UPDATE xuid      = VALUES(xuid),
                         money     = VALUES(money),
                         extraData = VALUES(extraData);
 -- #    }
--- #    {get
+-- #    {getmoney
 -- #        :xuid string
 SELECT *
 FROM simpleeco_data
 WHERE xuid = :xuid;
+-- #    }
+-- #    {deletemoney
+-- #        :xuid string
+DELETE
+FROM simpleeco_data
+WHERE xuid = :xuid;
+-- #    }
+
+
+-- #    {addxuid
+-- #        :xuid string
+-- #        :name string
+-- #        :extraData string
+INSERT INTO simpleeco_xuids (xuid, name, extraData)
+VALUES (:xuid, :name, :extraData)
+ON DUPLICATE KEY UPDATE xuid      = VALUES(xuid),
+                        name      = VALUES(name),
+                        extraData = VALUES(extraData);
+-- #    }
+-- #    {deletexuid
+-- #        :name string
+DELETE
+FROM simpleeco_xuids
+WHERE name = :name;
 -- #    }
 -- # }
