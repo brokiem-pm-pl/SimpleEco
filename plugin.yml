@@ -1,0 +1,5 @@
+name: SimpleEco
+main: brokiem\simpleco\SimpleEco
+version: 1.0.0
+api: 4.0
+author: broki
