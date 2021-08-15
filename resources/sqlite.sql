@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS simpleeco_xuids
 -- #    {addmoney
 -- #        :xuid string
 -- #        :money float
--- #        :extraData null|string
+-- #        :extraData ?string
 INSERT INTO simpleeco_data (xuid, money, extraData)
 VALUES (:xuid, :money, :extraData)
 ON DUPLICATE KEY UPDATE xuid      = VALUES(xuid),
@@ -56,7 +56,7 @@ WHERE xuid = :xuid;
 -- #    {addxuid
 -- #        :xuid string
 -- #        :name string
--- #        :extraData null|string
+-- #        :extraData ?string
 INSERT INTO simpleeco_xuids (xuid, name, extraData)
 VALUES (:xuid, :name, :extraData)
 ON DUPLICATE KEY UPDATE xuid      = VALUES(xuid),
