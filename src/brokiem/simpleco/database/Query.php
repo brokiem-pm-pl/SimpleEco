@@ -55,6 +55,15 @@ interface Query {
      * - resources/sqlite.sql:47
      *
      * <h3>Variables</h3>
+     * - <code>:name</code> string, required in sqlite.sql
+     */
+    public const SIMPLEECO_GET_XUID_BY_NAME = "simpleeco.getxuidbyname";
+
+    /**
+     * <h4>Declared in:</h4>
+     * - resources/sqlite.sql:47
+     *
+     * <h3>Variables</h3>
      * - <code>:xuid</code> string, required in sqlite.sql
      */
     public const SIMPLEECO_GETMONEY = "simpleeco.getmoney";

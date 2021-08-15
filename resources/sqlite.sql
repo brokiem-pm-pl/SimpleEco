@@ -63,6 +63,12 @@ ON DUPLICATE KEY UPDATE xuid      = VALUES(xuid),
                         name      = VALUES(name),
                         extraData = VALUES(extraData);
 -- #    }
+-- #    {getxuidbyname
+-- #        :name string
+SELECT *
+FROM simpleeco_xuids
+WHERE name = :name;
+-- #    }
 -- #    {deletexuid
 -- #        :name string
 DELETE

@@ -3,3 +3,17 @@ main: brokiem\simpleco\SimpleEco
 version: 1.0.0
 api: 4.0
 author: broki
+
+permissions:
+  seco.givemoney:
+    default: op
+  seco.mymoney:
+    default: true
+  seco.pay:
+    default: true
+  seco.seemoney:
+    default: true
+  seco.setmoney:
+    default: op
+  seco.takemoney:
+    default: op
