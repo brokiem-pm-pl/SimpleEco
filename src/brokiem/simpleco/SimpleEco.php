@@ -38,6 +38,7 @@ final class SimpleEco extends PluginBase {
         $this->dataConnector->executeGeneric(Query::SIMPLEECO_INIT_XUIDS);
         $this->dataConnector->waitAll();
 
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
         $this->getServer()->getCommandMap()->registerAll("seco", [
             new GiveMoneyCommand("givemoney", "Give money to player"),
             new MyMoneyCommand("mymoney", "See my money"),
