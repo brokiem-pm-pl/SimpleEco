@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace brokiem\simpleco;
 
-use brokiem\simpleco\api\EcoAPI;
 use brokiem\simpleco\commands\GiveMoneyCommand;
 use brokiem\simpleco\commands\MyMoneyCommand;
 use brokiem\simpleco\commands\PayCommand;
@@ -38,8 +37,6 @@ final class SimpleEco extends PluginBase {
         $this->dataConnector->executeGeneric(Query::SIMPLEECO_INIT_DATA);
         $this->dataConnector->executeGeneric(Query::SIMPLEECO_INIT_XUIDS);
         $this->dataConnector->waitAll();
-
-        (new EcoAPI($this->dataConnector));
 
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
         $this->getServer()->getCommandMap()->registerAll("seco", [

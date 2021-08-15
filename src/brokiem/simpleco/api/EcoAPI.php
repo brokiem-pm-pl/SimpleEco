@@ -5,15 +5,9 @@ declare(strict_types=1);
 namespace brokiem\simpleco\api;
 
 use brokiem\simpleco\database\Query;
-use poggit\libasynql\DataConnector;
+use brokiem\simpleco\SimpleEco;
 
 final class EcoAPI {
-
-    private static DataConnector $connector;
-
-    public function __construct(DataConnector $connector) {
-        self::$connector = $connector;
-    }
 
     public static function reduceMoney(string $name, float|int $value, ?callable $onInserted = null): void {
         self::addMoney($name, -$value, $onInserted);
@@ -27,7 +21,7 @@ final class EcoAPI {
                 self::getMoney($xuid, function(array $rows) use ($onInserted, $value, $xuid) {
                     $money = $rows[0]["money"];
 
-                    self::$connector->executeInsert(Query::SIMPLEECO_ADDMONEY, [
+                    SimpleEco::getInstance()->getDataConnector()->executeInsert(Query::SIMPLEECO_ADDMONEY, [
                         "xuid" => $xuid, "money" => $money + $value, "extraData" => null
                     ], $onInserted);
                 });
@@ -36,13 +30,13 @@ final class EcoAPI {
     }
 
     public static function getXuidByName(string $name, $callable): void {
-        self::$connector->executeSelect(Query::SIMPLEECO_GET_XUID_BY_NAME, [
+        SimpleEco::getInstance()->getDataConnector()->executeSelect(Query::SIMPLEECO_GET_XUID_BY_NAME, [
             "name" => $name
         ], $callable);
     }
 
     public static function getMoney(string $xuid, $callable): void {
-        self::$connector->executeSelect(Query::SIMPLEECO_GETMONEY, [
+        SimpleEco::getInstance()->getDataConnector()->executeSelect(Query::SIMPLEECO_GETMONEY, [
             "xuid" => $xuid
         ], $callable);
     }
@@ -52,7 +46,7 @@ final class EcoAPI {
             if (count($rows) >= 1) {
                 $xuid = $rows[0]["xuid"];
 
-                self::$connector->executeInsert(Query::SIMPLEECO_ADDMONEY, [
+                SimpleEco::getInstance()->getDataConnector()->executeInsert(Query::SIMPLEECO_ADDMONEY, [
                     "xuid" => $xuid, "money" => $value, "extraData" => null
                 ], $onInserted);
             }
@@ -60,7 +54,7 @@ final class EcoAPI {
     }
 
     public static function addPlayer(string $name, string $xuid, ?callable $onInserted = null): void {
-        self::$connector->executeInsert(Query::SIMPLEECO_ADDXUID, [
+        SimpleEco::getInstance()->getDataConnector()->executeInsert(Query::SIMPLEECO_ADDXUID, [
             "name" => $name, "xuid" => $xuid, "extraData" => null
         ], function() use ($onInserted, $name) {
             self::addMoney($name, 0, $onInserted);
@@ -72,10 +66,10 @@ final class EcoAPI {
             if (count($rows) >= 1) {
                 $xuid = $rows[0]["xuid"];
 
-                self::$connector->executeGeneric(Query::SIMPLEECO_DELETEMONEY, [
+                SimpleEco::getInstance()->getDataConnector()->executeGeneric(Query::SIMPLEECO_DELETEMONEY, [
                     "xuid" => $xuid
                 ], function() use ($onSuccess, $name) {
-                    self::$connector->executeGeneric(Query::SIMPLEECO_DELETEXUID, [
+                    SimpleEco::getInstance()->getDataConnector()->executeGeneric(Query::SIMPLEECO_DELETEXUID, [
                         "name" => $name
                     ], $onSuccess);
                 });
