@@ -36,6 +36,15 @@ CREATE TABLE IF NOT EXISTS simpleeco_xuids
 INSERT INTO simpleeco_data (xuid, money, extraData)
 VALUES (:xuid, :money, :extraData);
 -- #    }
+-- #    {setmoney
+-- #        :xuid string
+-- #        :money float
+-- #        :extraData ?string
+UPDATE simpleeco_data
+SET money     = :money,
+    extraData = :extraData
+WHERE xuid = :xuid;
+-- #    }
 -- #    {getmoney
 -- #        :xuid string
 SELECT *

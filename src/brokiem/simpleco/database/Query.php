@@ -23,6 +23,17 @@ interface Query {
 
     /**
      * <h4>Declared in:</h4>
+     * - resources/sqlite.sql:41
+     *
+     * <h3>Variables</h3>
+     * - <code>:extraData</code> string, required in sqlite.sql
+     * - <code>:money</code> float, required in sqlite.sql
+     * - <code>:xuid</code> string, required in sqlite.sql
+     */
+    public const SIMPLEECO_SETMONEY = "simpleeco.setmoney";
+
+    /**
+     * <h4>Declared in:</h4>
      * - resources/sqlite.sql:60
      *
      * <h3>Variables</h3>

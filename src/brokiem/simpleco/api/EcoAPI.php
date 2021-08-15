@@ -21,7 +21,7 @@ final class EcoAPI {
                 self::getMoney($xuid, function(array $rows) use ($onInserted, $value, $xuid) {
                     $money = $rows[0]["money"];
 
-                    SimpleEco::getInstance()->getDataConnector()->executeInsert(Query::SIMPLEECO_ADDMONEY, [
+                    SimpleEco::getInstance()->getDataConnector()->executeInsert(Query::SIMPLEECO_SETMONEY, [
                         "xuid" => $xuid, "money" => $money + $value, "extraData" => null
                     ], $onInserted);
                 });
