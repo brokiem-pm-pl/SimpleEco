@@ -24,7 +24,7 @@ final class TakeMoneyCommand extends Command implements PluginOwned {
             $player = Server::getInstance()->getPlayerByPrefix($args[0]);
 
             if ($player !== null) {
-                EcoAPI::reduceMoney($sender->getName(), $args[1], function() use ($sender, $args, $player) {
+                EcoAPI::reduceMoney($sender->getName(), (float)$args[1], function() use ($sender, $args, $player) {
                     $player->sendMessage("Your money has been taken $args[1] by " . $sender->getName());
                     $sender->sendMessage("Taking $args[1] money from {$player->getName()} success.");
                 });
