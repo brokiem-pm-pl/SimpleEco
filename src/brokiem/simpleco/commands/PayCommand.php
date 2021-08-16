@@ -21,7 +21,7 @@ final class PayCommand extends Command implements PluginOwned {
             return;
         }
 
-        if (isset($args[1]) and is_numeric($args[1]) and $sender instanceof Player) {
+        if (isset($args[1]) and is_numeric($args[1]) and is_int($args[1]) and $sender instanceof Player) {
             $player = Server::getInstance()->getPlayerByPrefix($args[0]);
 
             if ($player !== null) {
@@ -47,6 +47,8 @@ final class PayCommand extends Command implements PluginOwned {
             } else {
                 $sender->sendMessage(TextFormat::RED . "Player $args[0] not found or offline");
             }
+        } else {
+            $sender->sendMessage(TextFormat::RED . "Usage: /pay <player> <value>");
         }
     }
 

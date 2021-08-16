@@ -20,20 +20,22 @@ final class SeeMoneyCommand extends Command implements PluginOwned {
             return;
         }
 
-        if (isset($args[1]) and is_numeric($args[1])) {
+        if (isset($args[0])) {
             $player = Server::getInstance()->getPlayerByPrefix($args[0]);
 
             if ($player !== null) {
-                EconomyAPI::getXuidByName($player->getName(), function(array $rows) use ($sender) {
+                EconomyAPI::getXuidByName($player->getName(), function(array $rows) use ($player, $sender) {
                     if (count($rows) >= 1) {
-                        EconomyAPI::getMoney($rows[0]["xuid"], function(array $row) use ($sender) {
-                            $sender->sendMessage("Your money is {$row[0]["money"]}");
+                        EconomyAPI::getMoney($rows[0]["xuid"], function(array $row) use ($player, $sender) {
+                            $sender->sendMessage($player->getName() . " money is {$row[0]["money"]}");
                         });
                     }
                 });
             } else {
                 $sender->sendMessage(TextFormat::RED . "Player $args[0] not found or offline");
             }
+        } else {
+            $sender->sendMessage(TextFormat::RED . "Usage: /seemoney <player>");
         }
     }
 
