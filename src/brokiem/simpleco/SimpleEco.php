@@ -42,8 +42,8 @@ final class SimpleEco extends PluginBase {
         $this->getServer()->getCommandMap()->registerAll("seco", [
             new GiveMoneyCommand("givemoney", "Give money to player"),
             new MyMoneyCommand("mymoney", "See my money"),
-            new PayCommand("pay", "Pay money to other player", "/pay <player> <value>"),
-            new SeeMoneyCommand("seemoney", "See player money", "/seemoney <player>"),
+            new PayCommand("pay", "Pay money to other player"),
+            new SeeMoneyCommand("seemoney", "See player money"),
             new SetMoneyCommand("setmoney", "Set player money"),
             new TakeMoneyCommand("takemoney", "Take player money")
         ]);
