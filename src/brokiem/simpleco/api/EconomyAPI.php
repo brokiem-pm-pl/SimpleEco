@@ -9,11 +9,11 @@ use brokiem\simpleco\SimpleEco;
 
 final class EconomyAPI {
 
-    public static function reduceMoney(string $name, float|int $value, ?callable $onInserted = null): void {
+    public static function reduceMoney(string $name, int $value, ?callable $onInserted = null): void {
         self::addMoney($name, -$value, $onInserted);
     }
 
-    public static function addMoney(string $name, float|int $value, ?callable $onInserted = null): void {
+    public static function addMoney(string $name, int $value, ?callable $onInserted = null): void {
         self::getXuidByName($name, function(array $rows) use ($onInserted, $value) {
             if (count($rows) >= 1) {
                 $xuid = $rows[0]["xuid"];
@@ -41,7 +41,7 @@ final class EconomyAPI {
         ], $callable);
     }
 
-    public static function setMoney(string $name, float|int $value, ?callable $onInserted = null): void {
+    public static function setMoney(string $name, int $value, ?callable $onInserted = null): void {
         self::getXuidByName($name, function(array $rows) use ($onInserted, $value) {
             if (count($rows) >= 1) {
                 $xuid = $rows[0]["xuid"];
