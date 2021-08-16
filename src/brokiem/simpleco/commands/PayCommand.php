@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace brokiem\simpleco\commands;
 
-use brokiem\simpleco\api\EcoAPI;
+use brokiem\simpleco\api\EconomyAPI;
 use brokiem\simpleco\SimpleEco;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -25,14 +25,14 @@ final class PayCommand extends Command implements PluginOwned {
             $player = Server::getInstance()->getPlayerByPrefix($args[0]);
 
             if ($player !== null) {
-                EcoAPI::getXuidByName($sender->getName(), function(array $rows) use ($player, $args, $sender) {
+                EconomyAPI::getXuidByName($sender->getName(), function(array $rows) use ($player, $args, $sender) {
                     if (count($rows) >= 1) {
-                        EcoAPI::getMoney($rows[0]["xuid"], function(array $row) use ($player, $args, $sender) {
+                        EconomyAPI::getMoney($rows[0]["xuid"], function(array $row) use ($player, $args, $sender) {
                             $senderMoney = $row[0]["money"];
 
                             if ($senderMoney >= (float)$args[1] and (float)$args[1] > 0) {
-                                EcoAPI::reduceMoney($sender->getName(), (float)$args[1], function() use ($sender, $args, $player) {
-                                    EcoAPI::addMoney($player->getName(), (float)$args[1], function() use ($sender, $args, $player) {
+                                EconomyAPI::reduceMoney($sender->getName(), (float)$args[1], function() use ($sender, $args, $player) {
+                                    EconomyAPI::addMoney($player->getName(), (float)$args[1], function() use ($sender, $args, $player) {
                                         $player->sendMessage("You have been paid $args[1] by " . $sender->getName());
                                     });
 

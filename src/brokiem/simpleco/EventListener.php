@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace brokiem\simpleco;
 
-use brokiem\simpleco\api\EcoAPI;
+use brokiem\simpleco\api\EconomyAPI;
 use brokiem\simpleco\database\Query;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
@@ -18,7 +18,7 @@ class EventListener implements Listener {
             "name" => $player->getName()
         ], function(array $rows) use ($player) {
             if (count($rows) === 0) {
-                EcoAPI::addPlayer($player->getName(), $player->getXuid());
+                EconomyAPI::addPlayer($player->getName(), $player->getXuid());
             }
         });
     }

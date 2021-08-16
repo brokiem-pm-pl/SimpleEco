@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace brokiem\simpleco\commands;
 
-use brokiem\simpleco\api\EcoAPI;
+use brokiem\simpleco\api\EconomyAPI;
 use brokiem\simpleco\SimpleEco;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -20,9 +20,9 @@ final class MyMoneyCommand extends Command implements PluginOwned {
         }
 
         if ($sender instanceof Player) {
-            EcoAPI::getXuidByName($sender->getName(), function(array $rows) use ($sender) {
+            EconomyAPI::getXuidByName($sender->getName(), function(array $rows) use ($sender) {
                 if (count($rows) >= 1) {
-                    EcoAPI::getMoney($rows[0]["xuid"], function(array $row) use ($sender) {
+                    EconomyAPI::getMoney($rows[0]["xuid"], function(array $row) use ($sender) {
                         $sender->sendMessage("Your money is {$row[0]["money"]}");
                     });
                 }

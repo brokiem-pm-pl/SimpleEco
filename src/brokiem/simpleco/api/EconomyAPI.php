@@ -7,7 +7,7 @@ namespace brokiem\simpleco\api;
 use brokiem\simpleco\database\Query;
 use brokiem\simpleco\SimpleEco;
 
-final class EcoAPI {
+final class EconomyAPI {
 
     public static function reduceMoney(string $name, float|int $value, ?callable $onInserted = null): void {
         self::addMoney($name, -$value, $onInserted);

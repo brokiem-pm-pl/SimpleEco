@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace brokiem\simpleco\commands;
 
-use brokiem\simpleco\api\EcoAPI;
+use brokiem\simpleco\api\EconomyAPI;
 use brokiem\simpleco\SimpleEco;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -24,7 +24,7 @@ final class TakeMoneyCommand extends Command implements PluginOwned {
             $player = Server::getInstance()->getPlayerByPrefix($args[0]);
 
             if ($player !== null) {
-                EcoAPI::reduceMoney($sender->getName(), (float)$args[1], function() use ($sender, $args, $player) {
+                EconomyAPI::reduceMoney($sender->getName(), (float)$args[1], function() use ($sender, $args, $player) {
                     $player->sendMessage("Your money has been taken $args[1] by " . $sender->getName());
                     $sender->sendMessage("Taking $args[1] money from {$player->getName()} success.");
                 });
