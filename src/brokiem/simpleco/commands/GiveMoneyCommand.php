@@ -24,9 +24,9 @@ final class GiveMoneyCommand extends Command implements PluginOwned {
             $player = Server::getInstance()->getPlayerByPrefix($args[0]);
 
             if ($player !== null) {
-                EconomyAPI::addMoney($player->getName(), (float)$args[1], function() use ($sender, $args, $player) {
+                EconomyAPI::addMoney($player->getName(), (int)$args[1], function() use ($sender, $args, $player) {
                     $player->sendMessage("You have been given $args[1]");
-                    $sender->sendMessage("Giving $args[1] to {$player->getName()} success.");
+                    $sender->sendMessage("Giving " . (int)$args[1] . " to {$player->getName()} success.");
                 });
             } else {
                 $sender->sendMessage(TextFormat::RED . "Player $args[0] not found or offline");

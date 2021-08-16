@@ -21,7 +21,7 @@ final class PayCommand extends Command implements PluginOwned {
             return;
         }
 
-        if (isset($args[1]) and is_numeric($args[1]) and is_int($args[1]) and $sender instanceof Player) {
+        if (isset($args[1]) and is_numeric($args[1]) and $sender instanceof Player) {
             $player = Server::getInstance()->getPlayerByPrefix($args[0]);
 
             if ($player !== null) {
@@ -30,13 +30,13 @@ final class PayCommand extends Command implements PluginOwned {
                         EconomyAPI::getMoney($rows[0]["xuid"], function(array $row) use ($player, $args, $sender) {
                             $senderMoney = $row[0]["money"];
 
-                            if ($senderMoney >= (float)$args[1] and (float)$args[1] > 0) {
-                                EconomyAPI::reduceMoney($sender->getName(), (float)$args[1], function() use ($sender, $args, $player) {
-                                    EconomyAPI::addMoney($player->getName(), (float)$args[1], function() use ($sender, $args, $player) {
+                            if ($senderMoney >= (int)$args[1] and (int)$args[1] >= 1) {
+                                EconomyAPI::reduceMoney($sender->getName(), (int)$args[1], function() use ($sender, $args, $player) {
+                                    EconomyAPI::addMoney($player->getName(), (int)$args[1], function() use ($sender, $args, $player) {
                                         $player->sendMessage("You have been paid $args[1] by " . $sender->getName());
                                     });
 
-                                    $sender->sendMessage("Paying $args[1] to {$player->getName()} success.");
+                                    $sender->sendMessage("Paying " . (int)$args[1] . " to {$player->getName()} success.");
                                 });
                             } else {
                                 $sender->sendMessage(TextFormat::RED . "You don't have enough money!");
