@@ -14,12 +14,14 @@ class EventListener implements Listener {
     public function onJoin(PlayerJoinEvent $event): void {
         $player = $event->getPlayer();
 
-        SimpleEco::getInstance()->getDataConnector()->executeSelect(Query::SIMPLEECO_GET_XUID_BY_NAME, [
-            "name" => $player->getName()
-        ], function(array $rows) use ($player) {
-            if (count($rows) === 0) {
-                EconomyAPI::addPlayer($player->getName(), $player->getXuid());
-            }
-        });
+        if ($player->isConnected()) {
+            SimpleEco::getInstance()->getDataConnector()->executeSelect(Query::SIMPLEECO_GET_XUID_BY_NAME, [
+                "name" => $player->getName()
+            ], function(array $rows) use ($player) {
+                if (count($rows) === 0) {
+                    EconomyAPI::addPlayer($player->getName(), $player->getXuid());
+                }
+            });
+        }
     }
 }
