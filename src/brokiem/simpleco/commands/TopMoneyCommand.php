@@ -11,9 +11,12 @@ use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginOwned;
+use pocketmine\scheduler\ClosureTask;
 use pocketmine\Server;
 
 final class TopMoneyCommand extends Command implements PluginOwned {
+
+    private array $newArray = [];
 
     public function execute(CommandSender $sender, string $commandLabel, array $args) {
         if (!$sender->hasPermission("seco.topmoney")) {
@@ -21,30 +24,37 @@ final class TopMoneyCommand extends Command implements PluginOwned {
         }
 
         if ($sender instanceof Player) {
-            EconomyAPI::getTopMoney(function(array $rows) use ($sender) {
+            EconomyAPI::getTopMoney(function(array $rows) {
                 foreach ($rows as $row) {
-                    EconomyAPI::getMoney($row["xuid"], function(array $moneyRow) use ($sender, $row) {
-                        $name = $row["xuid"];
-
-                        $i = 0;
-                        foreach (Server::getInstance()->getOnlinePlayers() as $onlinePlayer) {
-                            if ($i >= 10) {
-                                break;
-                            }
-
-                            if ($onlinePlayer->getXuid() === $name) {
-                                $name = $onlinePlayer->getName();
-                                break;
-                            }
-
-                            $i++;
-                        }
-
-                        $string = $name . " -> " . $moneyRow[0]["money"] . "";
-                        $sender->sendMessage($string);
+                    EconomyAPI::getMoney($row["xuid"], function(array $moneyRow) use ($row) {
+                        $this->newArray[$row["xuid"]] = (int)$moneyRow[0]["money"];
                     });
                 }
             });
+
+            SimpleEco::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function() use ($sender): void {
+                $count = count($this->newArray);
+                $text = "";
+                arsort($this->newArray);
+                $i = 1;
+                foreach ($this->newArray as $name => $val) {
+                    foreach (Server::getInstance()->getOnlinePlayers() as $onlinePlayer) {
+                        if ($onlinePlayer->getXuid() === (string)$name) {
+                            $name = $onlinePlayer->getName();
+                            break;
+                        }
+                    }
+
+                    $text .= "$count| $name -> $val\n";
+                    if ($i > 9) {
+                        break;
+                    }
+                    ++$i;
+                }
+
+                $sender->sendMessage($text);
+            }), 120);
+            $sender->sendMessage("Processing top money, please wait....");
         }
     }
 
