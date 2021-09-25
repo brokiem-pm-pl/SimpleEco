@@ -17,3 +17,5 @@ permissions:
     default: op
   seco.takemoney:
     default: op
+  seco.topmoney:
+    default: true

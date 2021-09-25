@@ -52,6 +52,8 @@ interface Query {
      */
     public const SIMPLEECO_DELETEMONEY = "simpleeco.deletemoney";
 
+    public const SIMPLEECO_GETALLROW = "simpleeco.getallrow";
+
     /**
      * <h4>Declared in:</h4>
      * - resources/sqlite.sql:64

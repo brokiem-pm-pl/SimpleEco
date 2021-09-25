@@ -57,7 +57,10 @@ DELETE
 FROM simpleeco_data
 WHERE xuid = :xuid;
 -- #    }
-
+-- #    {getallrow
+SELECT *
+FROM simpleeco_data;
+-- #    }
 
 -- #    {addxuid
 -- #        :xuid string

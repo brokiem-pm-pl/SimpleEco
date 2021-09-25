@@ -10,6 +10,7 @@ use brokiem\simpleco\commands\PayCommand;
 use brokiem\simpleco\commands\SeeMoneyCommand;
 use brokiem\simpleco\commands\SetMoneyCommand;
 use brokiem\simpleco\commands\TakeMoneyCommand;
+use brokiem\simpleco\commands\TopMoneyCommand;
 use brokiem\simpleco\database\Query;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
@@ -45,7 +46,8 @@ final class SimpleEco extends PluginBase {
             new PayCommand("pay", "Pay money to other player"),
             new SeeMoneyCommand("seemoney", "See player money"),
             new SetMoneyCommand("setmoney", "Set player money"),
-            new TakeMoneyCommand("takemoney", "Take player money")
+            new TakeMoneyCommand("takemoney", "Take player money"),
+            new TopMoneyCommand("topmoney", "See top money")
         ]);
     }
 

@@ -31,6 +31,11 @@ final class PayCommand extends Command implements PluginOwned {
                             $senderMoney = $row[0]["money"];
 
                             if ($senderMoney >= (int)$args[1] and (int)$args[1] >= 1) {
+                                if ((int)$args[1] >= 100000) {
+                                    $player->sendMessage("Max transfer money is 100000");
+                                    return;
+                                }
+
                                 EconomyAPI::reduceMoney($sender->getName(), (int)$args[1], function() use ($sender, $args, $player) {
                                     EconomyAPI::addMoney($player->getName(), (int)$args[1], function() use ($sender, $args, $player) {
                                         $player->sendMessage("You have been paid $args[1] by " . $sender->getName());

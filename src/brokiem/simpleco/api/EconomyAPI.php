@@ -21,6 +21,11 @@ final class EconomyAPI {
                 self::getMoney($xuid, function(array $rows) use ($onInserted, $value, $xuid) {
                     $money = $rows[0]["money"];
 
+                    if ($money >= 50000) {
+                        $money = 5000;
+                        $value = 0;
+                    }
+
                     SimpleEco::getInstance()->getDataConnector()->executeInsert(Query::SIMPLEECO_SETMONEY, [
                         "xuid" => $xuid, "money" => $money + $value, "extraData" => null
                     ], $onInserted);
@@ -51,6 +56,10 @@ final class EconomyAPI {
                 ], $onInserted);
             }
         });
+    }
+
+    public static function getTopMoney(?callable $callable = null): void {
+        SimpleEco::getInstance()->getDataConnector()->executeSelect(Query::SIMPLEECO_GETALLROW, [], $callable);
     }
 
     public static function addPlayer(string $name, string $xuid, ?callable $onInserted = null): void {
