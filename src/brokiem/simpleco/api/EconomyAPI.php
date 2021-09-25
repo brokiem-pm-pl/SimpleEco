@@ -25,7 +25,7 @@ final class EconomyAPI {
                         $money = 1000;
                         $value = 0;
 
-                        $onInserted = function(array $r) { };
+                        $onInserted = null;
                     }
 
                     SimpleEco::getInstance()->getDataConnector()->executeInsert(Query::SIMPLEECO_SETMONEY, [
