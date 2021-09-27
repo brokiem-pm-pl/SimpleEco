@@ -10,7 +10,7 @@ use brokiem\simpleco\SimpleEco;
 final class EconomyAPI {
 
     public static function checkMaxMoney(float $value): int {
-        if ($value <= 99000000) {
+        if ($value <= -99000000) {
             return -98000000;
         }
 
