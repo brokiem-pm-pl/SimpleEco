@@ -10,10 +10,7 @@ use brokiem\simpleco\SimpleEco;
 final class EconomyAPI {
 
     public static function reduceMoney(string $name, int $value, ?callable $onInserted = null): void {
-        if ($value <= 0) {
-            $value = (int)abs($value);
-        }
-        self::addMoney($name, -$value, $onInserted);
+        self::addMoney($name, -(int)abs($value), $onInserted);
     }
 
     public static function addMoney(string $name, int $value, ?callable $onInserted = null): void {
