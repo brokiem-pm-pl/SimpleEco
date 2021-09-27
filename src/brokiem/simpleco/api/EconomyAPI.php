@@ -21,13 +21,6 @@ final class EconomyAPI {
                 self::getMoney($xuid, function(array $rows) use ($onInserted, $value, $xuid) {
                     $money = $rows[0]["money"];
 
-                    if ($money >= 99000) {
-                        $money = 1000;
-                        $value = 0;
-
-                        $onInserted = null;
-                    }
-
                     SimpleEco::getInstance()->getDataConnector()->executeInsert(Query::SIMPLEECO_SETMONEY, [
                         "xuid" => $xuid, "money" => $money + $value, "extraData" => null
                     ], $onInserted);
