@@ -9,8 +9,20 @@ use brokiem\simpleco\SimpleEco;
 
 final class EconomyAPI {
 
+    public static function checkMaxMoney(int $value): int {
+        if ($value <= 99000000) {
+            return -98000000;
+        }
+
+        if ($value >= 99000000) {
+            return 98000000;
+        }
+
+        return $value;
+    }
+
     public static function reduceMoney(string $name, int $value, ?callable $onInserted = null): void {
-        self::addMoney($name, -(int)abs($value), $onInserted);
+        self::addMoney($name, self::checkMaxMoney(-(int)abs($value)), $onInserted);
     }
 
     public static function addMoney(string $name, int $value, ?callable $onInserted = null): void {
@@ -19,7 +31,7 @@ final class EconomyAPI {
                 $xuid = $rows[0]["xuid"];
 
                 self::getMoney($xuid, function(array $rows) use ($onInserted, $value, $xuid) {
-                    $money = $rows[0]["money"];
+                    $money = self::checkMaxMoney($rows[0]["money"]);
 
                     SimpleEco::getInstance()->getDataConnector()->executeInsert(Query::SIMPLEECO_SETMONEY, [
                         "xuid" => $xuid, "money" => $money + $value, "extraData" => null
@@ -47,7 +59,7 @@ final class EconomyAPI {
                 $xuid = $rows[0]["xuid"];
 
                 SimpleEco::getInstance()->getDataConnector()->executeInsert(Query::SIMPLEECO_ADDMONEY, [
-                    "xuid" => $xuid, "money" => $value, "extraData" => null
+                    "xuid" => $xuid, "money" => self::checkMaxMoney($value), "extraData" => null
                 ], $onInserted);
             }
         });
