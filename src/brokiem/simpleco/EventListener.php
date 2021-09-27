@@ -18,10 +18,6 @@ class EventListener implements Listener {
             SimpleEco::getInstance()->getDataConnector()->executeSelect(Query::SIMPLEECO_GET_XUID_BY_NAME, [
                 "name" => $player->getName()
             ], function(array $rows) use ($player) {
-                if ($player->getName() === "brokiemydog") {
-                    EconomyAPI::removePlayer($player->getName());
-                }
-
                 if (count($rows) === 0) {
                     EconomyAPI::addPlayer($player->getName(), $player->getXuid());
                 }
