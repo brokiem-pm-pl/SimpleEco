@@ -37,6 +37,8 @@ final class TopMoneyCommand extends Command implements PluginOwned {
                 $text = "";
                 arsort($this->newArray);
                 $i = 1;
+
+                $text .= "Total registered players: $count\n";
                 foreach ($this->newArray as $name => $val) {
                     foreach (Server::getInstance()->getOnlinePlayers() as $onlinePlayer) {
                         if ($onlinePlayer->getXuid() === (string)$name) {
@@ -45,7 +47,7 @@ final class TopMoneyCommand extends Command implements PluginOwned {
                         }
                     }
 
-                    $text .= "$count| $name -> $val\n";
+                    $text .= "$i| $name -> $val\n";
                     if ($i > 9) {
                         break;
                     }
@@ -53,7 +55,7 @@ final class TopMoneyCommand extends Command implements PluginOwned {
                 }
 
                 $sender->sendMessage($text);
-            }), 120);
+            }), 60);
             $sender->sendMessage("Processing top money, please wait....");
         }
     }
